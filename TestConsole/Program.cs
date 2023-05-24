@@ -44,3 +44,7 @@ Console.WriteLine("-------------------------------");
 handler.RemovePack("Captain America");
 foreach (Pack p in handler.MyPacks) { Console.WriteLine(p.name); }
 foreach (Card c in handler.MyCards) { Console.WriteLine(c.name); }
+
+handler.RemovePack("Core Set");
+handler.AddPack("Black Widow");
+handler.SaveCollectionToFile();

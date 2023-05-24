@@ -1,5 +1,7 @@
 ﻿using ApiCall;
 using Data;
+using System.IO;
+using System.Text.Json;
 
 namespace CollectionHandling
 {
@@ -11,6 +13,8 @@ namespace CollectionHandling
         private HttpCall _call = new HttpCall("en");
         private List<Card> _allCards;
         private List<Pack> _allPacks;
+
+        public Collection _myCollection;
 
         private List<Card> _myCards;
         /// <summary>
@@ -126,17 +130,25 @@ namespace CollectionHandling
         /// <summary>
         /// Loads a collection from file
         /// </summary>
-        public void LoadCollection()
+        public void LoadCollectionFromFile()
         {
-            
+            List<Pack> packList = new List<Pack>();
+            string read = File.ReadAllText("D:\\Entwicklung\\Diverses\\MCDB\\collection.mc");
+            packList = JsonSerializer.Deserialize<List<Pack>>(read);
+            foreach(Pack p in _myPacks)
+            {
+                AddPack(p.name);
+            }
         }
 
         /// <summary>
         /// Saves a collection to file
         /// </summary>
-        public void SaveCollection()
+        public void SaveCollectionToFile()
         {
-
+            string content = JsonSerializer.Serialize<List<Pack>>(_myPacks);
+            System.IO.File.WriteAllText("D:\\Entwicklung\\Diverses\\MCDB\\collection.mc", content);
+            // TODO: Add decks to same file... maybe make xml serializable?
         }
         #endregion
     }
